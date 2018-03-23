@@ -268,6 +268,7 @@ static int client_send_metadata_to_server()
 {
 	struct ibv_wc wc[2];
 	int ret = -1;
+	printf("strlen = %d\n", strlen(src));
 	client_src_mr = rdma_buffer_register(pd,
 	                                     src,
 	                                     strlen(src),
