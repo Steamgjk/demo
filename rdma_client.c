@@ -380,7 +380,7 @@ static int client_remote_memory_ops()
 
 
 		memcpy(src, &cnt, sizeof(int));
-		debug("cnt=%d *src =%d\n",  cnt, *src);
+		printf("cnt=%d *src =%d\n",  cnt, (int)(*src));
 		cnt++;
 		if (cnt == 999)
 		{
