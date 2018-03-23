@@ -365,7 +365,6 @@ static int client_remote_memory_ops()
 
 	*src = (int)5;
 	debug("Trying to perform RDMA write... src=%d\n", *src);
-	getchar();
 	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
 	debug("Performed RMDA write... src= %d\n", *src);
 
@@ -424,6 +423,7 @@ static int client_remote_memory_ops()
 		if (*dst == 5)
 		{
 			cnt++;
+			debug("cnt=%d\n", cnt);
 			*dst = (int)3;
 			if (cnt == 10000)
 			{
