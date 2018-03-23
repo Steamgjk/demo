@@ -360,19 +360,20 @@ static int send_server_metadata_to_client()
 	struct ibv_send_wr *bad_wr = NULL;
 
 	//change  to 5
-	*buf_for_rwrite = (int)(-1);
-	debug("FIN change buf_for_rwrite=%d\n", *buf_for_rwrite );
+	int* tmp_cnt = (int*)(void*)buf_for_rwrite;
+	*tmp_cnt = (int)(-1);
+	debug("FIN change tmp_cnt=%d\n", *tmp_cnt );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	printf("After  post send  to sleep\n");
 	int i = 0;
 	long long L1, L2;
 	struct timeval tv;
-	while ( (*buf_for_rwrite) < 0 )
+	while ( (*tmp_cnt) < 0 )
 	{
 	}
 	gettimeofday(&tv, NULL);
-	while ((*buf_for_rwrite) < 5000)
+	while ((*tmp_cnt) < 5000)
 	{
 
 	}
