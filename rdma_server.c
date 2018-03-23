@@ -359,7 +359,7 @@ static int send_server_metadata_to_client()
 	// bad_wr == NULL if everything's OK.
 	struct ibv_send_wr *bad_wr = NULL;
 
-	int* test_int = static_cast<int*>(static_cast<void*>(buf_for_rwrite));
+	int* test_int = (int*)((void*)buf_for_rwrite);
 	debug("rbuf = %d  char_size=%d  int_size=%d\n", test_int[0], sizeof(char), sizeof(int));
 	//change 1 to 2
 
