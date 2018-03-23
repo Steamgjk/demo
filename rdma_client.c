@@ -374,6 +374,7 @@ static int client_remote_memory_ops()
 		rdma_error("Failed to do rdma write, errno: %d\n", -ret);
 		return -ret;
 	}
+	/*
 	debug("Performed RMDA write2...\n");
 	getchar();
 	int i = 0;
@@ -383,7 +384,7 @@ static int client_remote_memory_ops()
 	}
 	dst[strlen(dst) - 1] = '\0';
 	debug("before Prepare  Reigster dst = %s len =%d\n", dst, strlen(dst) );
-
+	**/
 	/**************************
 	 * Send RDMA read request *
 	 **************************/
