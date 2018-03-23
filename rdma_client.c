@@ -154,7 +154,7 @@ static int client_prepare_connection(struct sockaddr_in *s_addr)
 	 * is called "work" ;)
 	 */
 	client_cq = ibv_create_cq(cm_client_id->verbs /* which device*/,
-	                          CQ_CAPACITY /* maximum capacity*/,
+	                          10000 /* maximum capacity*/,
 	                          NULL /* user context, not used here */,
 	                          io_completion_channel /* which IO completion channel */,
 	                          0 /* signaling vector, not used here*/);
