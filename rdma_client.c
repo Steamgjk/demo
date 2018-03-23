@@ -429,7 +429,7 @@ static int client_remote_memory_ops()
 	gettimeofday(&tv, NULL);
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	printf("%d ops  duration =  %lld  \n", cnt, L2 - L1);
-	eixt(0);
+	exit(0);
 	getchar();
 	debug("After post RDMA read2... dst = %s\n", dst);
 	if (ret)
