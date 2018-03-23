@@ -404,20 +404,32 @@ static int client_remote_memory_ops()
 	rdma_read_wr.wr.rdma.remote_addr = server_metadata_attr.address;
 	rdma_read_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 
+	long long L1, L2;
+	timeval tv1;
+	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	// Post work request
 	*dst = (int)3;
 	debug("Trying to perform RDMA read... dst = %d\n", *dst);
+	int cnt = 0;
 	getchar();
 
 	while (1 == 1)
 	{
 		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
-		sleep(1);
-		debug("After post RDMA read... dst = %d\n", *dst);
-		*dst = (int)3;
-		debug(" assign RDMA read... dst = %d\n", *dst);
-
+		if (*dst == 5)
+		{
+			cnt++;
+			*dst = (int)3;
+			if (cnt == 10000)
+			{
+				break;
+			}
+		}
 	}
+	gettimeofday(&tv, NULL);
+	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
+	printf("%d ops  duration =  %lld  \n", cnt, L2 - L1);
+	eixt(0);
 	getchar();
 	debug("After post RDMA read2... dst = %s\n", dst);
 	if (ret)

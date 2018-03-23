@@ -10,6 +10,8 @@
 #ifndef RDMA_COMMON_H
 #define RDMA_COMMON_H
 
+#include <sys/time.h>
+#include <time.h>
 
 #include <stdio.h>
 #include <stdlib.h>
