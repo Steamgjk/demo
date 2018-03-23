@@ -420,11 +420,11 @@ static int client_remote_memory_ops()
 	while (1 == 1)
 	{
 		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
-		/*
+
 		if (ret == 12)
 		{
 			printf("ret = %d  cnt=%d dst =%d\n", ret, cnt, *dst);
-			getchar();
+			sleep(1);
 		}
 
 		if (*dst == 5)
@@ -433,12 +433,12 @@ static int client_remote_memory_ops()
 			//debug("cnt=%d\n", cnt);
 			//sleep(1);
 			*dst = (int)3;
-			if (cnt == 2000)
+			if (cnt == 20000)
 			{
 				break;
 			}
 		}
-		**/
+		/*
 		if (ret == 0)
 		{
 			cnt++;
@@ -447,6 +447,7 @@ static int client_remote_memory_ops()
 				break;
 			}
 		}
+		**/
 	}
 	gettimeofday(&tv, NULL);
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
