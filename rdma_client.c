@@ -404,13 +404,13 @@ static int client_remote_memory_ops()
 	rdma_read_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 
 	// Post work request
-	debug("Trying to perform RDMA read... dst = %s\n", dst);
+	debug("Trying to perform RDMA read... dst = %d\n", *dst);
 	getchar();
 	while (1 == 1)
 	{
 		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
 		sleep(1);
-		debug("After post RDMA read... dst = %s\n", dst);
+		debug("After post RDMA read... dst = %d\n", *dst);
 
 	}
 	getchar();
