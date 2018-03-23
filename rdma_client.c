@@ -379,7 +379,7 @@ static int client_remote_memory_ops()
 		}
 
 
-		memcpy(src, &cnt, sizeof(int));
+		memcpy(src, &cnt, INT_SIZE);
 		printf("cnt=%d *src =%d\n",  cnt, (int)(*src));
 		cnt++;
 		if (cnt == 999)
@@ -582,8 +582,8 @@ int main(int argc, char **argv)
 
 	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
-	src = calloc(sizeof(int) , 1);
-	dst = calloc(sizeof(int), 1);
+	src = calloc(INT_SIZE , 1);
+	dst = calloc(INT_SIZE, 1);
 
 	*src = (int)1;
 	debug("currently src(int) = %d", *((int*)(void*)src));
