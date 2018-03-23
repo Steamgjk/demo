@@ -269,6 +269,7 @@ static int client_send_metadata_to_server()
 	struct ibv_wc wc[2];
 	int ret = -1;
 	//strlen-sizeof
+	debug("src size %d", sizeof(src));
 	client_src_mr = rdma_buffer_register(pd,
 	                                     src,
 	                                     sizeof(src),
@@ -521,7 +522,7 @@ int main(int argc, char **argv)
 	dst = calloc(sizeof(int), 1);
 	int curR = 1;
 	memcpy(src, &curR, sizeof(int));
-
+	debug("src size = %d\n", sizeof(src));
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
 	{
