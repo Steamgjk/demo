@@ -389,7 +389,7 @@ static int client_remote_memory_ops()
 	/**************************
 	 * Send RDMA read request *
 	 **************************/
-	// Prepare dst buffer
+	// Prepare dst buffer strlen-to sizeof
 	client_dst_mr = rdma_buffer_register(pd,
 	                                     dst,
 	                                     sizeof(src),
