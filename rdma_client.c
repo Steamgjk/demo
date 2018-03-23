@@ -360,10 +360,11 @@ static int client_remote_memory_ops()
 	rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
 	rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 
-	debug("Trying to perform RDMA write...\n");
+	*src = (int)5;
+	debug("Trying to perform RDMA write... src=%d\n", *src);
 	getchar();
 	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-	debug("Performed RMDA write... src= %d\n", *((int*)(void*)src) );
+	debug("Performed RMDA write... src= %d\n", *src);
 
 	if (ret)
 	{

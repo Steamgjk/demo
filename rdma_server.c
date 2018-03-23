@@ -359,18 +359,16 @@ static int send_server_metadata_to_client()
 	// bad_wr == NULL if everything's OK.
 	struct ibv_send_wr *bad_wr = NULL;
 
-	int* test_int = (int*)((void*)buf_for_rwrite);
-	debug("rbuf = %d  char_size=%d  int_size=%d\n", test_int[0], sizeof(char), sizeof(int));
 	//change  to 5
 	*buf_for_rwrite = (int)5;
-	debug("FIN change buf_for_rwrite=%d\n", *((int*)(void*)buf_for_rwrite) );
-	debug("hehe %d\n", *buf_for_rwrite );
+	debug("FIN change buf_for_rwrite=%d\n", *buf_for_rwrite );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	printf("After  post send  \n");
 	int i = 0;
 	while (1)
 	{
+		debug("real time=%d\n", *buf_for_rwrite );
 
 		/*
 		printf("buf_for_rwrite = %s\n", buf_for_rwrite );
