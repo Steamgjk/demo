@@ -269,10 +269,9 @@ static int client_send_metadata_to_server()
 	struct ibv_wc wc[2];
 	int ret = -1;
 	//strlen-sizeof
-	debug("src size %d", sizeof(src));
 	client_src_mr = rdma_buffer_register(pd,
 	                                     src,
-	                                     sizeof(src),
+	                                     INT_SIZE,
 	                                     (IBV_ACCESS_LOCAL_WRITE |
 	                                      IBV_ACCESS_REMOTE_READ |
 	                                      IBV_ACCESS_REMOTE_WRITE));
@@ -364,7 +363,7 @@ static int client_remote_memory_ops()
 	debug("Trying to perform RDMA write...\n");
 	getchar();
 	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-	debug("Performed RMDA write..11.  %d\n", sizeof(src));
+	debug("Performed RMDA write... src= %d\n", *((int*)(void*)src) );
 
 	if (ret)
 	{
@@ -378,7 +377,7 @@ static int client_remote_memory_ops()
 	// Prepare dst buffer strlen-to sizeof
 	client_dst_mr = rdma_buffer_register(pd,
 	                                     dst,
-	                                     sizeof(src),
+	                                     INT_SIZE,
 	                                     IBV_ACCESS_LOCAL_WRITE);
 	if (!client_dst_mr)
 	{
@@ -520,8 +519,7 @@ int main(int argc, char **argv)
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
 	src = calloc(sizeof(int) , 1);
 	dst = calloc(sizeof(int), 1);
-	int curR = 1;
-	//memcpy(src, &curR, sizeof(int));
+
 	*src = (int)1;
 	debug("currently src(int) = %d", *((int*)(void*)src));
 	ret = client_prepare_connection(&server_sockaddr);

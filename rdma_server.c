@@ -361,12 +361,10 @@ static int send_server_metadata_to_client()
 
 	int* test_int = (int*)((void*)buf_for_rwrite);
 	debug("rbuf = %d  char_size=%d  int_size=%d\n", test_int[0], sizeof(char), sizeof(int));
-	//change 1 to 2
-
-	int a_val = 2;
-	memcpy(buf_for_rwrite, &a_val, sizeof(int));
-	debug("FIN change buf_for_rwrite=%d\n", buf_for_rwrite);
-
+	//change  to 5
+	*buf_for_rwrite = (int)5;
+	debug("FIN change buf_for_rwrite=%d\n", *((int*)(void*)buf_for_rwrite) );
+	debug("hehe %d\n", *buf_for_rwrite );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	printf("After  post send  \n");
