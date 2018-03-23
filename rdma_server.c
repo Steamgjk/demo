@@ -364,11 +364,12 @@ static int send_server_metadata_to_client()
 	debug("FIN change buf_for_rwrite=%d\n", *buf_for_rwrite );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
-	printf("After  post send  \n");
+	printf("After  post send  to sleep\n");
 	int i = 0;
 	while (1)
 	{
-		debug("real time=%d\n", *buf_for_rwrite );
+		sleep(1);
+		//debug("real time=%d\n", *buf_for_rwrite );
 
 		/*
 		printf("buf_for_rwrite = %s\n", buf_for_rwrite );
