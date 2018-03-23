@@ -420,6 +420,7 @@ static int client_remote_memory_ops()
 	while (1 == 1)
 	{
 		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
+		printf("ret = %d  dst =%d\n", ret, *dst);
 		if (*dst == 5)
 		{
 			cnt++;
