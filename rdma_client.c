@@ -154,7 +154,7 @@ static int client_prepare_connection(struct sockaddr_in *s_addr)
 	 * is called "work" ;)
 	 */
 	client_cq = ibv_create_cq(cm_client_id->verbs /* which device*/,
-	                          10000 /* maximum capacity*/,
+	                          20000 /* maximum capacity*/,
 	                          NULL /* user context, not used here */,
 	                          io_completion_channel /* which IO completion channel */,
 	                          0 /* signaling vector, not used here*/);
@@ -175,7 +175,7 @@ static int client_prepare_connection(struct sockaddr_in *s_addr)
 	* device. We just use a small number as defined in rdma_common.h */
 	bzero(&qp_init_attr, sizeof qp_init_attr);
 	qp_init_attr.cap.max_recv_sge = MAX_SGE; /* Maximum SGE per receive posting */
-	qp_init_attr.cap.max_recv_wr = MAX_WR; /* Maximum receive posting capacity */
+	qp_init_attr.cap.max_recv_wr = 10000; /* Maximum receive posting capacity */
 	qp_init_attr.cap.max_send_sge = MAX_SGE; /* Maximum SGE per send posting */
 	qp_init_attr.cap.max_send_wr = 10000; /* Maximum send posting capacity */
 	qp_init_attr.qp_type = IBV_QPT_RC; /* QP type, RC = Reliable connection */
