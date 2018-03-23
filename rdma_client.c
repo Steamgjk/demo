@@ -413,7 +413,7 @@ static int client_remote_memory_ops()
 	debug("Trying to perform RDMA read... dst = %d\n", *dst);
 	int cnt = 0;
 	long long L1, L2;
-	timeval tv;
+	struct timeval tv;
 	getchar();
 
 	gettimeofday(&tv, NULL);
