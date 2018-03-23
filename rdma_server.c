@@ -364,7 +364,7 @@ static int send_server_metadata_to_client()
 	//change 1 to 2
 
 	int a_val = 2;
-	memcpy(buf_for_rwrite, a_val, sizeof(int));
+	memcpy(buf_for_rwrite, &a_val, sizeof(int));
 	debug("FIN change buf_for_rwrite=%d\n", buf_for_rwrite);
 
 	// Send WR to client.
