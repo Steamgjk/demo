@@ -392,7 +392,7 @@ static int client_remote_memory_ops()
 	// Prepare dst buffer
 	client_dst_mr = rdma_buffer_register(pd,
 	                                     dst,
-	                                     strlen(src),
+	                                     sizeof(src),
 	                                     IBV_ACCESS_LOCAL_WRITE);
 	if (!client_dst_mr)
 	{
