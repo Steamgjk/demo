@@ -379,7 +379,7 @@ static int client_remote_memory_ops()
 
 		*src = (cnt++);
 		debug("cnt=%d *src =%d\n",  cnt, *src);
-		if (cnt == 100)
+		if (cnt == 999)
 		{
 			break;
 		}
