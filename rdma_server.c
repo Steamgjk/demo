@@ -365,6 +365,7 @@ static int send_server_metadata_to_client()
 	int i = 0;
 	while (1)
 	{
+		/*
 		printf("buf_for_rwrite = %s\n", buf_for_rwrite );
 		sleep(1);
 		printf("changinig...\n");
@@ -382,6 +383,7 @@ static int send_server_metadata_to_client()
 		{
 			memcpy(buf_for_rwrite, "22222", strlen(buf_for_rwrite));
 		}
+		**/
 	}
 	if (ret)
 	{
