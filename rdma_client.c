@@ -432,7 +432,7 @@ static int client_remote_memory_ops()
 			//debug("cnt=%d\n", cnt);
 			//sleep(1);
 			*dst = (int)3;
-			if (cnt == 100000)
+			if (cnt == 2000)
 			{
 				break;
 			}
