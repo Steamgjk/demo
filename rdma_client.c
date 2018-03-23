@@ -521,7 +521,8 @@ int main(int argc, char **argv)
 	src = calloc(sizeof(int) , 1);
 	dst = calloc(sizeof(int), 1);
 	int curR = 1;
-	memcpy(src, &curR, sizeof(int));
+	//memcpy(src, &curR, sizeof(int));
+	*src = (int)1;
 	debug("currently src(int) = %d", *((int*)(void*)src));
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
