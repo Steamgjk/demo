@@ -373,11 +373,12 @@ static int client_remote_memory_ops()
 
 		if (ret == 12)
 		{
-			printf("ret = %d  cnt=%d *src =%d\n", ret, cnt, *src);
+			debug("ret = %d  cnt=%d *src =%d\n", ret, cnt, *src);
 			sleep(1);
 		}
 
-		*src = cnt++;
+		*src = (cnt++);
+		debug("cnt=%d *src =%d\n",  cnt, *src);
 		if (cnt == 5100)
 		{
 			break;
@@ -388,7 +389,7 @@ static int client_remote_memory_ops()
 
 
 	debug("FIN Performed RMDA write... src= %d\n", *src);
-
+	getchar();
 	if (ret)
 	{
 		rdma_error("Failed to do rdma write, errno: %d\n", -ret);
