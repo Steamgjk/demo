@@ -362,10 +362,31 @@ static int client_remote_memory_ops()
 	rdma_write_wr.opcode = IBV_WR_RDMA_WRITE;
 	rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
 	rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
-
-	*src = (int)5;
+	int cnt = 0;
+	*src = cnt;
 	debug("Trying to perform RDMA write... src=%d\n", *src);
-	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
+	getchar();
+
+	while (1 == 1)
+	{
+		ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
+
+		if (ret == 12)
+		{
+			printf("ret = %d  cnt=%d dst =%d\n", ret, cnt, *dst);
+			sleep(1);
+		}
+
+		*src = cnt++;
+		if (cnt == 5100)
+		{
+			break;
+		}
+
+
+	}
+
+
 	debug("Performed RMDA write... src= %d\n", *src);
 
 	if (ret)
@@ -410,7 +431,7 @@ static int client_remote_memory_ops()
 	// Post work request
 	*dst = (int)3;
 	debug("Trying to perform RDMA read... dst = %d\n", *dst);
-	int cnt = 0;
+
 	long long L1, L2;
 	struct timeval tv;
 	getchar();
@@ -433,7 +454,7 @@ static int client_remote_memory_ops()
 			//debug("cnt=%d\n", cnt);
 			//sleep(1);
 			*dst = (int)3;
-			if (cnt == 5000)
+			if (cnt == 5100)
 			{
 				break;
 			}

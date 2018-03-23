@@ -360,37 +360,25 @@ static int send_server_metadata_to_client()
 	struct ibv_send_wr *bad_wr = NULL;
 
 	//change  to 5
-	*buf_for_rwrite = (int)5;
+	*buf_for_rwrite = (int)(-1);
 	debug("FIN change buf_for_rwrite=%d\n", *buf_for_rwrite );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	printf("After  post send  to sleep\n");
 	int i = 0;
-	while (1)
+	long long L1, L2;
+	struct timeval tv;
+	while ( (*buf_for_rwrite) < 0 )
 	{
-		sleep(1);
-		//debug("real time=%d\n", *buf_for_rwrite );
-
-		/*
-		printf("buf_for_rwrite = %s\n", buf_for_rwrite );
-		sleep(1);
-		printf("changinig...\n");
-		i++;
-		i %= 3;
-		if (i == 0)
-		{
-			memcpy(buf_for_rwrite, "00000", strlen(buf_for_rwrite));
-		}
-		else if (i == 1)
-		{
-			memcpy(buf_for_rwrite, "11111", strlen(buf_for_rwrite));
-		}
-		else
-		{
-			memcpy(buf_for_rwrite, "22222", strlen(buf_for_rwrite));
-		}
-		**/
 	}
+	gettimeofday(&tv, NULL);
+	while ((*buf_for_rwrite) < 5000)
+	{
+
+	}
+	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
+	printf("%d ops  duration =  %lld  micro seconds \n", cnt, L2 - L1);
+
 	if (ret)
 	{
 		rdma_error("Failed to send server metadata, errno: %d\n", -ret);
