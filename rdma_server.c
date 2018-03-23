@@ -308,13 +308,13 @@ static int send_server_metadata_to_client()
 		return ret;
 	}
 
-	printf("Client side buffer information is received...\n");
+	debug("Client side buffer information is received...\n");
 	show_rdma_buffer_attr(&client_metadata_attr);
-	printf("The client has requested buffer length of : %d bytes\n", client_metadata_attr.length);
+	debug("The client has requested buffer length of : %d bytes\n", client_metadata_attr.length);
 
 	// Allocate buffer to be used by client for RDMA.
 	buf_for_rwrite = calloc(client_metadata_attr.length, 0);
-	printf("Before register buf = %s   %p\n", buf_for_rwrite, buf_for_rwrite);
+	debug("Before register buf = %s   %p\n", buf_for_rwrite, buf_for_rwrite);
 	server_buffer_mr = rdma_buffer_alloc1(pd, buf_for_rwrite, client_metadata_attr.length, // 4KB
 	                                      (IBV_ACCESS_REMOTE_READ |
 	                                       IBV_ACCESS_LOCAL_WRITE | // Must be set when REMOTE_WRITE is set.
@@ -362,7 +362,7 @@ static int send_server_metadata_to_client()
 	debug("rbuf = %d\n", buf_for_rwrite);
 	//change 1 to 2
 	*buf_for_rwrite = 2;
-	debug("FIN change\n");
+	debug("FIN change buf_for_rwrite=%d\n", buf_for_rwrite);
 
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
@@ -491,37 +491,7 @@ int main(int argc, char **argv)
 	bzero(&server_sockaddr, sizeof server_sockaddr);
 	server_sockaddr.sin_family = AF_INET; /* standard IP NET address */
 	server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* passed address */
-	/* Parse Command Line Arguments, not the most reliable code */
-	/*
-	while ((option = getopt(argc, argv, "a:p:")) != -1)
-	{
-		switch (option)
-		{
-		case 'a':
-			// Remember, this will overwrite the port info
-			ret = get_addr(optarg, (struct sockaddr*) &server_sockaddr);
-			if (ret)
-			{
-				rdma_error("Invalid IP \n");
-				return ret;
-			}
-			break;
-		case 'p':
-			// passed port to listen on
-			server_sockaddr.sin_port = htons(strtol(optarg, NULL, 0));
-			break;
-		default:
-			usage();
-			break;
-		}
-	}
 
-	if (!server_sockaddr.sin_port)
-	{
-		// If still zero, that mean no port info provided
-		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); // use default port
-	}
-	**/
 	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
 

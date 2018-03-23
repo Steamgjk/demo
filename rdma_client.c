@@ -364,28 +364,13 @@ static int client_remote_memory_ops()
 	getchar();
 	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
 	debug("Performed RMDA write..11.  %d\n", sizeof(src));
-	/*
-	strncpy(src, "change", strlen(src));
-	debug("Trying to perform RDMA write2...\n");
-	getchar();
-	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-	**/
+
 	if (ret)
 	{
 		rdma_error("Failed to do rdma write, errno: %d\n", -ret);
 		return -ret;
 	}
-	/*
-	debug("Performed RMDA write2...\n");
-	getchar();
-	int i = 0;
-	for (i = 0; i < strlen(dst) - 2; i++)
-	{
-		dst[i] = '1';
-	}
-	dst[strlen(dst) - 1] = '\0';
-	debug("before Prepare  Reigster dst = %s len =%d\n", dst, strlen(dst) );
-	**/
+
 	/**************************
 	 * Send RDMA read request *
 	 **************************/
@@ -529,62 +514,6 @@ int main(int argc, char **argv)
 	server_sockaddr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 	/* buffers are NULL */
 	src = dst = NULL;
-	/* Parse Command Line Arguments */
-	/*
-	while ((option = getopt(argc, argv, "s:a:p:")) != -1)
-	{
-		switch (option)
-		{
-		case 's':
-			printf("Passed string is : %s , with count %u \n",
-			       optarg,
-			       (unsigned int) strlen(optarg));
-			src = calloc(strlen(optarg) , 1);
-			if (!src)
-			{
-				rdma_error("Failed to allocate memory : -ENOMEM\n");
-				return -ENOMEM;
-			}
-			// Copy the passes arguments
-			strncpy(src, optarg, strlen(optarg));
-			dst = calloc(strlen(optarg), 1);
-			if (!dst)
-			{
-				rdma_error("Failed to allocate destination memory, -ENOMEM\n");
-				free(src);
-				return -ENOMEM;
-			}
-			break;
-		case 'a':
-			// remember, this overwrites the port info
-			ret = get_addr(optarg, (struct sockaddr*) &server_sockaddr);
-			if (ret)
-			{
-				rdma_error("Invalid IP \n");
-				return ret;
-			}
-			break;
-		case 'p':
-			// passed port to listen on
-			server_sockaddr.sin_port = htons(strtol(optarg, NULL, 0));
-			break;
-		default:
-			usage();
-			break;
-		}
-	}
-
-	if (!server_sockaddr.sin_port)
-	{
-		// no port provided, use the default port
-		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
-	}
-	if (src == NULL)
-	{
-		printf("Please provide a string to copy \n");
-		usage();
-	}
-	**/
 
 	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
