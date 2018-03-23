@@ -415,7 +415,7 @@ static int client_remote_memory_ops()
 		sleep(1);
 		debug("After post RDMA read... dst = %d\n", *dst);
 		*dst = (int)3;
-
+		debug(" assign RDMA read... dst = %d\n", *dst);
 
 	}
 	getchar();
