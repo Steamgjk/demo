@@ -377,7 +377,7 @@ static int send_server_metadata_to_client()
 
 	}
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	printf("%d ops  duration =  %lld  micro seconds \n", cnt, L2 - L1);
+	printf("%d ops  duration =  %lld  micro seconds \n", (*buf_for_rwrite), L2 - L1);
 
 	if (ret)
 	{
