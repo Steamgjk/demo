@@ -26,9 +26,11 @@
 #include <rdma/rdma_cma.h>
 #include <infiniband/verbs.h>
 
+#define INT_SIZE 4
+
 /* Error Macro*/
 #define rdma_error(msg, args...) do {\
-	fprintf(stderr, "%s : %d : ERROR : "msg, __FILE__, __LINE__, ## args);\
+  fprintf(stderr, "%s : %d : ERROR : "msg, __FILE__, __LINE__, ## args);\
 }while(0);
 
 #define ACN_RDMA_DEBUG
@@ -62,15 +64,15 @@
  */
 struct __attribute((packed)) rdma_buffer_attr
 {
-	uint64_t address;
-	uint32_t length;
-	union stag
-	{
-		/* if we send, we call it local stags */
-		uint32_t local_stag;
-		/* if we receive, we call it remote stag */
-		uint32_t remote_stag;
-	} stag;
+  uint64_t address;
+  uint32_t length;
+  union stag
+  {
+    /* if we send, we call it local stags */
+    uint32_t local_stag;
+    /* if we receive, we call it remote stag */
+    uint32_t remote_stag;
+  } stag;
 };
 /* resolves a given destination name to sin_addr */
 int get_addr(char *dst, struct sockaddr *addr);
