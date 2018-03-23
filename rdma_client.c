@@ -607,14 +607,14 @@ int main(int argc, char **argv)
 		rdma_error("Failed to setup client connection , ret = %d \n", ret);
 		return ret;
 	}
-	/*
+
 	ret = client_send_metadata_to_server();
 	if (ret)
 	{
 		rdma_error("Failed to setup client connection , ret = %d \n", ret);
 		return ret;
 	}
-	**/
+
 	ret = client_remote_memory_ops();
 	if (ret)
 	{
