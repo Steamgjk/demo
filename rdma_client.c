@@ -177,7 +177,7 @@ static int client_prepare_connection(struct sockaddr_in *s_addr)
 	qp_init_attr.cap.max_recv_sge = MAX_SGE; /* Maximum SGE per receive posting */
 	qp_init_attr.cap.max_recv_wr = MAX_WR; /* Maximum receive posting capacity */
 	qp_init_attr.cap.max_send_sge = MAX_SGE; /* Maximum SGE per send posting */
-	qp_init_attr.cap.max_send_wr = 10000; /* Maximum send posting capacity */
+	qp_init_attr.cap.max_send_wr = 1000000; /* Maximum send posting capacity */
 	qp_init_attr.qp_type = IBV_QPT_RC; /* QP type, RC = Reliable connection */
 	/* We use same completion queue, but one can use different queues */
 	qp_init_attr.recv_cq = client_cq; /* Where should I notify for receive completion operations */
@@ -420,14 +420,14 @@ static int client_remote_memory_ops()
 	while (1 == 1)
 	{
 		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
-		printf("ret = %d  dst =%d\n", ret, *dst);
+		//printf("ret = %d  dst =%d\n", ret, *dst);
 		if (*dst == 5)
 		{
 			cnt++;
-			debug("cnt=%d\n", cnt);
+			//debug("cnt=%d\n", cnt);
 			//sleep(1);
 			*dst = (int)3;
-			if (cnt == 10000)
+			if (cnt == 1000000)
 			{
 				break;
 			}
