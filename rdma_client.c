@@ -521,8 +521,10 @@ int main(int argc, char **argv)
 	src = calloc(sizeof(int) , 1);
 	dst = calloc(sizeof(int), 1);
 	int curR = 1;
+	debug("before memcpy size of src = %d", sizeof(src));
+	debug("int size = %d", sizeof(int));
 	memcpy(src, &curR, sizeof(int));
-	debug("src size = %d\n", sizeof(src));
+	debug("src size after memcpy = %d\n", sizeof(src));
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
 	{
