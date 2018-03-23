@@ -8,6 +8,9 @@
 
 #include "rdma_common.h"
 
+#include <sys/time.h>
+#include <time.h>
+
 /* These are basic RDMA resources */
 /* These are RDMA connection related resources */
 static struct rdma_event_channel *cm_event_channel = NULL;
