@@ -363,8 +363,8 @@ static int client_remote_memory_ops()
 	rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
 	rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 	int cnt = 0;
-
-	*src = cnt;
+	int* tmp_int = (int*)(void*)src;
+	*tmp_int = cnt;
 	debug("Trying to perform RDMA write... src=%d\n", *src);
 	getchar();
 
@@ -380,13 +380,12 @@ static int client_remote_memory_ops()
 
 
 		//memcpy(src, &cnt, INT_SIZE);
-		int* tmp_int = (int*)(void*)src;
-		*tmp_int = cnt;
+		//int* tmp_int = (int*)(void*)src;
+		*tmp_int = cnt++;
+		//printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
+		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
 
-		printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
-		//getchar();
-		cnt++;
-		if (cnt == 999)
+		if (cnt == 5100)
 		{
 			break;
 		}
