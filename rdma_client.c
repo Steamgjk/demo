@@ -518,11 +518,13 @@ int main(int argc, char **argv)
 
 	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
+	debug("before calloc size of src = %d\n", sizeof(src));
 	src = calloc(sizeof(int) , 1);
+	debug("after memcpy size of src = %d\n", sizeof(src));
 	dst = calloc(sizeof(int), 1);
 	int curR = 1;
-	debug("before memcpy size of src = %d", sizeof(src));
-	debug("int size = %d", sizeof(int));
+	debug("before memcpy size of src = %d\n", sizeof(src));
+	debug("int size = %d\n", sizeof(int));
 	memcpy(src, &curR, sizeof(int));
 	debug("src size after memcpy = %d\n", sizeof(src));
 	ret = client_prepare_connection(&server_sockaddr);
