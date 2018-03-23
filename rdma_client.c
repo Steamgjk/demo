@@ -341,47 +341,48 @@ static int client_remote_memory_ops()
 	/***************************
 	 * Send RDMA write request *
 	 ***************************/
+	/*
+		// In RDMA write, the sge is used to tell the local CA what memory
+		// we want to transfer to the remote CA.
+		// The remote address is set below in rdma_write_wr.wr.rdma.remote_addr.
+		struct ibv_sge rdma_write_sge;
+		rdma_write_sge.addr = (uint64_t)client_src_mr->addr;
+		rdma_write_sge.length = client_src_mr->length;
+		rdma_write_sge.lkey = client_src_mr->lkey;
 
-	// In RDMA write, the sge is used to tell the local CA what memory
-	// we want to transfer to the remote CA.
-	// The remote address is set below in rdma_write_wr.wr.rdma.remote_addr.
-	struct ibv_sge rdma_write_sge;
-	rdma_write_sge.addr = (uint64_t)client_src_mr->addr;
-	rdma_write_sge.length = client_src_mr->length;
-	rdma_write_sge.lkey = client_src_mr->lkey;
+		// Create work request to send to local CA.
+		struct ibv_send_wr rdma_write_wr;
+		bzero(&rdma_write_wr, sizeof(rdma_write_wr));
+		rdma_write_wr.sg_list = &rdma_write_sge;
+		rdma_write_wr.num_sge = 1;
+		rdma_write_wr.opcode = IBV_WR_RDMA_WRITE;
+		rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
+		rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 
-	// Create work request to send to local CA.
-	struct ibv_send_wr rdma_write_wr;
-	bzero(&rdma_write_wr, sizeof(rdma_write_wr));
-	rdma_write_wr.sg_list = &rdma_write_sge;
-	rdma_write_wr.num_sge = 1;
-	rdma_write_wr.opcode = IBV_WR_RDMA_WRITE;
-	rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
-	rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
+		debug("Trying to perform RDMA write...\n");
+		getchar();
+		ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
+		debug("Performed RMDA write...\n");
+		strncpy(src, "change", strlen(src));
+		debug("Trying to perform RDMA write2...\n");
+		getchar();
+		ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
 
-	debug("Trying to perform RDMA write...\n");
-	getchar();
-	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-	debug("Performed RMDA write...\n");
-	strncpy(src, "change", strlen(src));
-	debug("Trying to perform RDMA write2...\n");
-	getchar();
-	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-
-	if (ret)
-	{
-		rdma_error("Failed to do rdma write, errno: %d\n", -ret);
-		return -ret;
-	}
-	debug("Performed RMDA write2...\n");
-	getchar();
-	int i = 0;
-	for (i = 0; i < strlen(dst) - 2; i++)
-	{
-		dst[i] = '1';
-	}
-	dst[strlen(dst) - 1] = '\0';
-	debug("before Prepare  Reigster dst = %s len =%d\n", dst, strlen(dst) );
+		if (ret)
+		{
+			rdma_error("Failed to do rdma write, errno: %d\n", -ret);
+			return -ret;
+		}
+		debug("Performed RMDA write2...\n");
+		getchar();
+		int i = 0;
+		for (i = 0; i < strlen(dst) - 2; i++)
+		{
+			dst[i] = '1';
+		}
+		dst[strlen(dst) - 1] = '\0';
+		debug("before Prepare  Reigster dst = %s len =%d\n", dst, strlen(dst) );
+	**/
 	/**************************
 	 * Send RDMA read request *
 	 **************************/
@@ -526,6 +527,7 @@ int main(int argc, char **argv)
 	/* buffers are NULL */
 	src = dst = NULL;
 	/* Parse Command Line Arguments */
+	/*
 	while ((option = getopt(argc, argv, "s:a:p:")) != -1)
 	{
 		switch (option)
@@ -540,7 +542,7 @@ int main(int argc, char **argv)
 				rdma_error("Failed to allocate memory : -ENOMEM\n");
 				return -ENOMEM;
 			}
-			/* Copy the passes arguments */
+			// Copy the passes arguments
 			strncpy(src, optarg, strlen(optarg));
 			dst = calloc(strlen(optarg), 1);
 			if (!dst)
@@ -551,7 +553,7 @@ int main(int argc, char **argv)
 			}
 			break;
 		case 'a':
-			/* remember, this overwrites the port info */
+			// remember, this overwrites the port info
 			ret = get_addr(optarg, (struct sockaddr*) &server_sockaddr);
 			if (ret)
 			{
@@ -560,7 +562,7 @@ int main(int argc, char **argv)
 			}
 			break;
 		case 'p':
-			/* passed port to listen on */
+			// passed port to listen on
 			server_sockaddr.sin_port = htons(strtol(optarg, NULL, 0));
 			break;
 		default:
@@ -568,9 +570,10 @@ int main(int argc, char **argv)
 			break;
 		}
 	}
+
 	if (!server_sockaddr.sin_port)
 	{
-		/* no port provided, use the default port */
+		// no port provided, use the default port
 		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
 	}
 	if (src == NULL)
@@ -578,6 +581,12 @@ int main(int argc, char **argv)
 		printf("Please provide a string to copy \n");
 		usage();
 	}
+	**/
+	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
+	memcpy(server_sockaddr, "12.12.10.16", sizeof(struct sockaddr_in));
+	src = calloc(strlen(int) , 1);
+
+
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
 	{
@@ -596,12 +605,14 @@ int main(int argc, char **argv)
 		rdma_error("Failed to setup client connection , ret = %d \n", ret);
 		return ret;
 	}
+	/*
 	ret = client_send_metadata_to_server();
 	if (ret)
 	{
 		rdma_error("Failed to setup client connection , ret = %d \n", ret);
 		return ret;
 	}
+	**/
 	ret = client_remote_memory_ops();
 	if (ret)
 	{
