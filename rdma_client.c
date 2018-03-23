@@ -384,7 +384,7 @@ static int client_remote_memory_ops()
 		*tmp_int = cnt;
 
 		printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
-		getchar();
+		//getchar();
 		cnt++;
 		if (cnt == 999)
 		{
