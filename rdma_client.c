@@ -583,7 +583,7 @@ int main(int argc, char **argv)
 	}
 	**/
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
-	memcpy(server_sockaddr, "12.12.10.16", sizeof(struct sockaddr_in));
+	get_addr("12.12.10.16", server_sockaddr)
 	src = calloc(strlen(int) , 1);
 
 
