@@ -378,8 +378,10 @@ static int client_remote_memory_ops()
 			sleep(1);
 		}
 
-		*tmp_int = (int)(cnt++);
+
+		memcpy(src, &cnt, sizeof(int));
 		debug("cnt=%d *src =%d\n",  cnt, *src);
+		cnt++;
 		if (cnt == 999)
 		{
 			break;
