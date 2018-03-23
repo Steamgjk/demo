@@ -486,12 +486,13 @@ int main(int argc, char **argv)
 	server_sockaddr.sin_family = AF_INET; /* standard IP NET address */
 	server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* passed address */
 	/* Parse Command Line Arguments, not the most reliable code */
+	/*
 	while ((option = getopt(argc, argv, "a:p:")) != -1)
 	{
 		switch (option)
 		{
 		case 'a':
-			/* Remember, this will overwrite the port info */
+			// Remember, this will overwrite the port info
 			ret = get_addr(optarg, (struct sockaddr*) &server_sockaddr);
 			if (ret)
 			{
@@ -500,7 +501,7 @@ int main(int argc, char **argv)
 			}
 			break;
 		case 'p':
-			/* passed port to listen on */
+			// passed port to listen on
 			server_sockaddr.sin_port = htons(strtol(optarg, NULL, 0));
 			break;
 		default:
@@ -508,11 +509,16 @@ int main(int argc, char **argv)
 			break;
 		}
 	}
+
 	if (!server_sockaddr.sin_port)
 	{
-		/* If still zero, that mean no port info provided */
-		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
+		// If still zero, that mean no port info provided
+		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); // use default port
 	}
+	**/
+	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
+	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
+
 	ret = start_rdma_server(&server_sockaddr);
 	if (ret)
 	{
