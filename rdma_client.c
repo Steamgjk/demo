@@ -425,6 +425,7 @@ static int client_remote_memory_ops()
 		{
 			cnt++;
 			debug("cnt=%d\n", cnt);
+			sleep(1);
 			*dst = (int)3;
 			if (cnt == 10000)
 			{
