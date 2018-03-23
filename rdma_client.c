@@ -35,7 +35,7 @@ static int check_src_dst()
 	debug("src: '%s'\n", src);
 	debug("dst: '%s'\n", dst);
 
-	int ret =  memcmp((void*) src, (void*) dst, strlen(src));
+	int ret =  memcmp((void*) src, (void*) dst, sizeof(src));
 	printf("ret = %d errno = %d \n", ret, errno);
 
 	return ret;
@@ -268,10 +268,10 @@ static int client_send_metadata_to_server()
 {
 	struct ibv_wc wc[2];
 	int ret = -1;
-	printf("strlen = %d\n", strlen(src));
+	//strlen-sizeof
 	client_src_mr = rdma_buffer_register(pd,
 	                                     src,
-	                                     strlen(src),
+	                                     sizeof(src),
 	                                     (IBV_ACCESS_LOCAL_WRITE |
 	                                      IBV_ACCESS_REMOTE_READ |
 	                                      IBV_ACCESS_REMOTE_WRITE));
@@ -363,7 +363,7 @@ static int client_remote_memory_ops()
 	debug("Trying to perform RDMA write...\n");
 	getchar();
 	ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-	debug("Performed RMDA write..11.  %d\n", strlen(src));
+	debug("Performed RMDA write..11.  %d\n", sizeof(src));
 	/*
 	strncpy(src, "change", strlen(src));
 	debug("Trying to perform RDMA write2...\n");
@@ -392,7 +392,7 @@ static int client_remote_memory_ops()
 	// Prepare dst buffer strlen-to sizeof
 	client_dst_mr = rdma_buffer_register(pd,
 	                                     dst,
-	                                     strlen(src),
+	                                     sizeof(src),
 	                                     IBV_ACCESS_LOCAL_WRITE);
 	if (!client_dst_mr)
 	{
