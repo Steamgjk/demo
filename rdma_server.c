@@ -373,6 +373,7 @@ static int send_server_metadata_to_client()
 	{
 	}
 	gettimeofday(&tv, NULL);
+	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	while ((*tmp_cnt) < 5000)
 	{
 
