@@ -7,7 +7,7 @@ int main()
 	b = 1;
 	c = 3;
 	char* tt = calloc(sizeof(int), 5);
-	int arr = {0, 1, 2, 3, 4};
+	int arr[5] = {0, 1, 2, 3, 4};
 	int* tmp_int = (int*)(void*)tt;
 	int t = 10000;
 	long long L1, L2;
