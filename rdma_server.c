@@ -362,7 +362,7 @@ static int send_server_metadata_to_client()
 	//change  to 5
 	int* tmp_cnt = (int*)(void*)buf_for_rwrite;
 	*tmp_cnt = (int)(-1);
-	debug("FIN change tmp_cnt=%d\n", *tmp_cnt );
+	debug("tmp_cnt=%d\n", *tmp_cnt );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	printf("After  post send  to sleep\n");
@@ -379,7 +379,7 @@ static int send_server_metadata_to_client()
 
 	}
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	printf("%d ops  duration =  %lld  micro seconds \n", (*buf_for_rwrite), L2 - L1);
+	printf("%d ops  duration =  %lld  micro seconds \n", (*tmp_cnt), L2 - L1);
 
 	if (ret)
 	{
