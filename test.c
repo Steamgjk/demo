@@ -15,7 +15,7 @@ int main()
 	int cnt = 0;
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 
-	while (1 == 1)
+	while (cnt <= 10000)
 	{
 		cnt++;
 		memcpy(tmp_int, arr, sizeof(int) * 5);
