@@ -6,7 +6,8 @@ int main()
 	a = 0;
 	b = 1;
 	c = 3;
-	char* tt = calloc(sizeof(int), 1);
+	char* tt = calloc(sizeof(int), 5);
+	int arr = {0, 1, 2, 3, 4};
 	int* tmp_int = (int*)(void*)tt;
 	int t = 10000;
 	long long L1, L2;
@@ -17,14 +18,10 @@ int main()
 	while (1 == 1)
 	{
 		cnt++;
-		*tmp_int = (int)cnt;
-		if (cnt >= 10000)
-		{
-			break;
-		}
+		memcpy(tmp_int, arr, sizeof(int) * 5);
 	}
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	printf("%d ops  duration =  %lld  micro seconds \n", (a), L2 - L1);
+	printf("%d ops  duration =  %lld  micro seconds \n", (cnt), L2 - L1);
 
 
 }
