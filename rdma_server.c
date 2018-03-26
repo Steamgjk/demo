@@ -365,13 +365,15 @@ static int send_server_metadata_to_client()
 	debug("tmp_cnt=%d\n", *tmp_cnt );
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
-	debug("After  post send  to sleep\n");
+	debug("After11  post send  to sleep\n");
 	int i = 0;
 	long long L1, L2;
 	struct timeval tv;
 	while ( (*tmp_cnt) < 0 )
 	{
-		debug("remote write?  %d", *tmp_cnt);
+
+		//debug("remote write?  %d", *tmp_cnt);
+		printf("sleepiing...\n");
 		sleep(1);
 	}
 	debug("hahah");
