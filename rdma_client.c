@@ -365,7 +365,7 @@ static int client_remote_memory_ops()
 	int cnt = 0;
 	int* tmp_int = (int*)(void*)src;
 	*tmp_int = cnt;
-	debug("Trying to perform RDMA write... src=%d\n", *src);
+	debug("Trying to perform RDMA write... tmp_int=%d\n", *tmp_int);
 	getchar();
 
 	while (1 == 1)

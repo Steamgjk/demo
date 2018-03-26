@@ -371,6 +371,8 @@ static int send_server_metadata_to_client()
 	struct timeval tv;
 	while ( (*tmp_cnt) < 0 )
 	{
+		debug("remote write?  %d", *tmp_cnt);
+		sleep(1);
 	}
 	gettimeofday(&tv, NULL);
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
