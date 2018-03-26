@@ -384,7 +384,10 @@ static int client_remote_memory_ops()
 		*tmp_int = cnt++;
 		//printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
-
+		if (cnt % 1000 == 0)
+		{
+			sleep(1);
+		}
 		if (cnt == 5100)
 		{
 			break;
@@ -394,7 +397,7 @@ static int client_remote_memory_ops()
 	}
 
 
-	debug("FIN Performed RMDA write... src= %d\n", *src);
+	debug("FIN Performed RMDA write... tmp_int= %d\n", *tmp_int);
 	getchar();
 	if (ret)
 	{
