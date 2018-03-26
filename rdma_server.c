@@ -366,7 +366,6 @@ static int send_server_metadata_to_client()
 	// Send WR to client.
 	ret = ibv_post_send(client_qp, &server_send_wr, &bad_wr);
 	debug("After11  post send  to sleep\n");
-	int i = 0;
 	long long L1, L2;
 	struct timeval tv;
 
