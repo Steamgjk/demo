@@ -13,7 +13,7 @@ int main()
 	struct timeval tv;
 	int cnt = 0;
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	int cap = 100;
+	int cap = 1000;
 	float arr[cap];
 	int i = 0;
 	for (i = 0; i < cap; i++)
