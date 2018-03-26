@@ -371,14 +371,15 @@ static int send_server_metadata_to_client()
 
 	gettimeofday(&tv, NULL);
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	bool sh = true;
+	int sh = 1;
 	while ((*tmp_cnt) < 5000)
 	{
 		printf("tmp_cnt = %d\n", *tmp_cnt);
-		if ((*tmp_cnt) > 0 && sh)
+		if ((*tmp_cnt) > 0 && sh == 1)
 		{
 			gettimeofday(&tv, NULL);
 			L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
+			sh = 0;
 		}
 	}
 	gettimeofday(&tv, NULL);
