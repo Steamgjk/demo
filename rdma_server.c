@@ -373,7 +373,7 @@ static int send_server_metadata_to_client()
 	{
 
 		//debug("remote write?  %d", *tmp_cnt);
-		printf("sleepiing...\n");
+		printf("sleeping...\n");
 		sleep(1);
 	}
 	debug("hahah");
@@ -381,7 +381,7 @@ static int send_server_metadata_to_client()
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	while ((*tmp_cnt) < 5000)
 	{
-
+		printf("tmp_cnt = %d\n", tmp_cnt);
 	}
 	gettimeofday(&tv, NULL);
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
