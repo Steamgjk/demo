@@ -279,7 +279,7 @@ static int client_send_metadata_to_server()
 	//strlen-sizeof
 	client_src_mr = rdma_buffer_register(pd,
 	                                     src,
-	                                     INT_SIZE,
+	                                     BLOCK_SZ,
 	                                     (IBV_ACCESS_LOCAL_WRITE |
 	                                      IBV_ACCESS_REMOTE_READ |
 	                                      IBV_ACCESS_REMOTE_WRITE));
@@ -512,8 +512,8 @@ int main(int argc, char **argv)
 
 	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
-	src = calloc(INT_SIZE , 1);
-	dst = calloc(INT_SIZE, 1);
+	//src = calloc(INT_SIZE , 1);
+	//dst = calloc(INT_SIZE, 1);
 
 	src = block_mem[0];
 	debug("currently src(int) = %d", *((int*)(void*)src));
