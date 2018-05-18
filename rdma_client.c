@@ -396,7 +396,7 @@ static int client_remote_memory_ops()
 		}
 		char* buf = (void*) tmp_int;
 
-		memcpy(buf + sizeof(int), d_data, data_sz)
+		memcpy(buf + sizeof(int), d_data, data_sz);
 
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
 
