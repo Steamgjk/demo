@@ -389,98 +389,17 @@ static int client_remote_memory_ops()
 		//printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
 
-		if (cnt == 5100)
-		{
-			break;
-		}
+		getchar();
 
 
 	}
 
 
 	debug("FIN Performed RMDA write... tmp_int= %d\n", *tmp_int);
-	getchar();
+
 	if (ret)
 	{
 		rdma_error("Failed to do rdma write, errno: %d\n", -ret);
-		return -ret;
-	}
-
-	/**************************
-	 * Send RDMA read request *
-	 **************************/
-	// Prepare dst buffer strlen-to sizeof
-	client_dst_mr = rdma_buffer_register(pd,
-	                                     dst,
-	                                     INT_SIZE,
-	                                     IBV_ACCESS_LOCAL_WRITE);
-	if (!client_dst_mr)
-	{
-		rdma_error("Failed to register dst buffer, ret = %d \n", ret);
-		return ret;
-	}
-
-	// Create sge
-	// In RDMA read, the sge is used to tell the local CA where in local
-	// memory we want put the data read from remote.
-	// The remote address is set below in rdma_read_wr.wr.rdma.remote_addr.
-	struct ibv_sge rdma_read_sge;
-	rdma_read_sge.addr = (uint64_t)client_dst_mr->addr;
-	rdma_read_sge.length = client_dst_mr->length;
-	rdma_read_sge.lkey = client_dst_mr->lkey;
-
-	// Create work request
-	struct ibv_send_wr rdma_read_wr;
-	bzero(&rdma_read_wr, sizeof(rdma_read_wr));
-	rdma_read_wr.sg_list = &rdma_read_sge;
-	rdma_read_wr.num_sge = 1;
-	rdma_read_wr.opcode = IBV_WR_RDMA_READ;
-	rdma_read_wr.wr.rdma.remote_addr = server_metadata_attr.address;
-	rdma_read_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
-
-
-	// Post work request
-	*dst = (int)3;
-	debug("Trying to perform RDMA read... dst = %d\n", *dst);
-
-	long long L1, L2;
-	struct timeval tv;
-	getchar();
-
-	gettimeofday(&tv, NULL);
-	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	while (1 == 1)
-	{
-		ret = ibv_post_send(client_qp, &rdma_read_wr, &bad_wr);
-
-		if (ret == 12)
-		{
-			printf("ret = %d  cnt=%d dst =%d\n", ret, cnt, *dst);
-			sleep(1);
-		}
-
-		if (*dst == 5)
-		{
-			cnt++;
-			//debug("cnt=%d\n", cnt);
-			//sleep(1);
-			*dst = (int)3;
-			if (cnt == 5100)
-			{
-				break;
-			}
-		}
-
-	}
-	gettimeofday(&tv, NULL);
-	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-	printf("%d ops  duration =  %lld  micro seconds \n", cnt, L2 - L1);
-	exit(0);
-	getchar();
-	debug("After post RDMA read2... dst = %s\n", dst);
-	if (ret)
-	{
-		rdma_error("Failed to do rdma read, errno: %d\n", -ret);
 		return -ret;
 	}
 
