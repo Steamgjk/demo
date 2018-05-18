@@ -515,7 +515,7 @@ int main(int argc, char **argv)
 	src = calloc(INT_SIZE , 1);
 	dst = calloc(INT_SIZE, 1);
 
-	*src = block_mem[0];
+	src = block_mem[0];
 	debug("currently src(int) = %d", *((int*)(void*)src));
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
