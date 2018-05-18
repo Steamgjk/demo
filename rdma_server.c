@@ -519,6 +519,7 @@ int main(int argc, char **argv)
 		if (*buf > 0 )
 		{
 			printf("recv=%d\n", *buf );
+			getchar();
 			char* ddata = (void*)buf;
 			ddata = ddata + sizeof(int);
 			double* real_data = (void*)ddata;
