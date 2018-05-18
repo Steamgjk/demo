@@ -384,7 +384,7 @@ static int client_remote_memory_ops()
 		}
 
 
-		int ele_num = random() % 100000;
+		int ele_num = random() % 10;
 		*tmp_int = ele_num;
 		size_t data_sz = ele_num * sizeof(double);
 		double*d_data = (double*)malloc(data_sz);
