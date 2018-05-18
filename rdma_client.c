@@ -383,7 +383,9 @@ static int client_remote_memory_ops()
 		for (int i = 0; i < ele_num; i++)
 		{
 			d_data[i] = drand48();
+			printf("%lf\n", d_data[i] );
 		}
+		printf("\n");
 		char* buf = (void*) tmp_int;
 		memcpy(buf + sizeof(int), d_data, data_sz);
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
