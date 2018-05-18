@@ -376,16 +376,6 @@ static int send_server_metadata_to_client()
 	gettimeofday(&tv, NULL);
 	L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	int sh = 1;
-	while ((*tmp_cnt) < 5000)
-	{
-		printf("tmp_cnt = %d\n", *tmp_cnt);
-		if ((*tmp_cnt) > 0 && sh == 1)
-		{
-			gettimeofday(&tv, NULL);
-			L1 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
-			sh = 0;
-		}
-	}
 	gettimeofday(&tv, NULL);
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
 	printf("%d ops  duration =  %lld  micro seconds \n", (*tmp_cnt), L2 - L1);
@@ -521,6 +511,12 @@ int main(int argc, char **argv)
 	{
 		rdma_error("Failed to send server metadata to the client, ret = %d \n", ret);
 		return ret;
+	}
+	int* buf = (void*)block_mem[0];
+	while (1 == 1)
+	{
+		printf("buf=%d\n", *buf);
+		sleep(1);
 	}
 	ret = disconnect_and_cleanup();
 	if (ret)
