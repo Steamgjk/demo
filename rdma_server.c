@@ -516,6 +516,22 @@ int main(int argc, char **argv)
 	while (1 == 1)
 	{
 		printf("buf=%d\n", *buf);
+		if (*buf > 0 )
+		{
+			printf("recv=%d\n", *buf );
+			char* ddata = (void*)buf;
+			ddata = ddata + sizeof(int);
+			double* real_data = (void*)ddata;
+			for (int j = 0; j < *buf; j++)
+			{
+				printf("%lf", real_data[j]);
+			}
+			printf("\n");
+		}
+		else
+		{
+			printf("no data\n");
+		}
 		sleep(1);
 	}
 	ret = disconnect_and_cleanup();

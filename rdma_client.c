@@ -10,6 +10,7 @@
 
 #include <sys/time.h>
 #include <time.h>
+#include <stdlib.h>
 
 #define BLOCK_SZ 25000000
 #define BLOCK_NUM 4
@@ -367,8 +368,8 @@ static int client_remote_memory_ops()
 	rdma_write_wr.wr.rdma.remote_addr = server_metadata_attr.address;
 	rdma_write_wr.wr.rdma.rkey = server_metadata_attr.stag.local_stag;
 	int cnt = 0;
-	int* tmp_int = (int*)(void*)src;
-	*tmp_int = cnt;
+	int* tmp_int = (void*)src;
+	*tmp_int = 0;
 	debug("Trying to perform RDMA write... tmp_int=%d\n", *tmp_int);
 	getchar();
 
@@ -385,8 +386,18 @@ static int client_remote_memory_ops()
 
 		//memcpy(src, &cnt, INT_SIZE);
 		//int* tmp_int = (int*)(void*)src;
-		*tmp_int = cnt++;
-		//printf("cnt=%d *src =%d tmp=%d\n",  cnt, *((int*)((void*)src)), (*tmp_int));
+		int ele_num = random() % 100000;
+		*tmp_int = ele_num;
+		size_t data_sz = ele_num * sizeof(double);
+		double*d_data = (double*)malloc(data_sz);
+		for (int i = 0; i < ele_num; i++)
+		{
+			d_data[i] = drand48();
+		}
+		char* buf = (void*) tmp_int;
+
+		memcpy(buf + sizeof(int), d_data, data_sz)
+
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
 
 		getchar();
