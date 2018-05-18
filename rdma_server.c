@@ -26,6 +26,9 @@ static struct ibv_recv_wr client_recv_wr, *bad_client_recv_wr = NULL;
 static struct ibv_sge client_recv_sge;
 
 static char* buf_for_rwrite = NULL;
+#define BLOCK_SZ 25000000
+#define BLOCK_NUM 4
+char* block_mem[BLOCK_NUM];
 /* When we call this function cm_client_id must be set to a valid identifier.
  * This is where, we prepare client connection before we accept it. This
  * mainly involve pre-posting a receive buffer to receive client side
@@ -313,7 +316,8 @@ static int send_server_metadata_to_client()
 	debug("The client has requested buffer length of : %d bytes\n", client_metadata_attr.length);
 
 	// Allocate buffer to be used by client for RDMA.
-	buf_for_rwrite = calloc(client_metadata_attr.length, 0);
+	//buf_for_rwrite = calloc(client_metadata_attr.length, 0);
+	buf_for_rwrite = block_mem[0];
 	debug("Before register buf = %s   %p\n", buf_for_rwrite, buf_for_rwrite);
 	server_buffer_mr = rdma_buffer_alloc1(pd, buf_for_rwrite, client_metadata_attr.length, // 4KB
 	                                      (IBV_ACCESS_REMOTE_READ |
@@ -481,6 +485,10 @@ void usage()
 
 int main(int argc, char **argv)
 {
+	for (int i = 0; i < BLOCK_NUM ; i++)
+	{
+		block_mem[i] = calloc(BLOCK_SZ, 1);
+	}
 	int ret, option;
 	struct sockaddr_in server_sockaddr;
 	bzero(&server_sockaddr, sizeof server_sockaddr);

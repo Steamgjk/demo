@@ -11,6 +11,10 @@
 #include <sys/time.h>
 #include <time.h>
 
+#define BLOCK_SZ 25000000
+#define BLOCK_NUM 4
+char* block_mem[BLOCK_NUM];
+
 /* These are basic RDMA resources */
 /* These are RDMA connection related resources */
 static struct rdma_event_channel *cm_event_channel = NULL;
@@ -466,16 +470,7 @@ static int client_remote_memory_ops()
 				break;
 			}
 		}
-		/*
-		if (ret == 0)
-		{
-			cnt++;
-			if (cnt == 2000)
-			{
-				break;
-			}
-		}
-		**/
+
 	}
 	gettimeofday(&tv, NULL);
 	L2 = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
@@ -575,6 +570,10 @@ void usage()
 
 int main(int argc, char **argv)
 {
+	for (int i = 0; i < BLOCK_NUM ; i++)
+	{
+		block_mem[i] = calloc(BLOCK_SZ, 1);
+	}
 	struct sockaddr_in server_sockaddr;
 	int ret, option;
 	bzero(&server_sockaddr, sizeof server_sockaddr);
