@@ -384,8 +384,6 @@ static int client_remote_memory_ops()
 		}
 
 
-		//memcpy(src, &cnt, INT_SIZE);
-		//int* tmp_int = (int*)(void*)src;
 		int ele_num = random() % 100000;
 		*tmp_int = ele_num;
 		size_t data_sz = ele_num * sizeof(double);
@@ -517,7 +515,7 @@ int main(int argc, char **argv)
 	src = calloc(INT_SIZE , 1);
 	dst = calloc(INT_SIZE, 1);
 
-	*src = (int)1;
+	*src = block_mem[0];
 	debug("currently src(int) = %d", *((int*)(void*)src));
 	ret = client_prepare_connection(&server_sockaddr);
 	if (ret)
