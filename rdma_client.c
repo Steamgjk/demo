@@ -375,14 +375,6 @@ static int client_remote_memory_ops()
 
 	while (1 == 1)
 	{
-		ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
-
-		if (ret == 12)
-		{
-			debug("ret = %d  cnt=%d *src =%d\n", ret, cnt, *src);
-			sleep(1);
-		}
-
 
 		int ele_num = random() % 10;
 		*tmp_int = ele_num;
@@ -393,10 +385,21 @@ static int client_remote_memory_ops()
 			d_data[i] = drand48();
 		}
 		char* buf = (void*) tmp_int;
-
 		memcpy(buf + sizeof(int), d_data, data_sz);
-
 		printf("cnt=%d *src =%d\n",  cnt, *((int*)((void*)src)) );
+
+		ret = ibv_post_send(client_qp, &rdma_write_wr, &bad_wr);
+
+		if (ret == 12)
+		{
+			debug("ret = %d  cnt=%d *src =%d\n", ret, cnt, *src);
+			sleep(1);
+		}
+
+
+
+
+
 
 		getchar();
 
