@@ -485,7 +485,7 @@ int main(int argc, char **argv)
 	server_sockaddr.sin_family = AF_INET; /* standard IP NET address */
 	server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* passed address */
 
-	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
+	get_addr("12.12.10.17", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
 
 	ret = start_rdma_server(&server_sockaddr);

@@ -515,7 +515,7 @@ int main(int argc, char **argv)
 	/* buffers are NULL */
 	src = dst = NULL;
 
-	get_addr("12.12.10.16", (struct sockaddr*) &server_sockaddr);
+	get_addr("12.12.10.17", (struct sockaddr*) &server_sockaddr);
 	server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT);
 	//src = calloc(INT_SIZE , 1);
 	//dst = calloc(INT_SIZE, 1);
